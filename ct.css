@@ -73,3 +73,8 @@ font-family: fantasy;
 font-size: 48px;
 width: 36;
 }
+
+/*ton to WARNING*/
+
+.warning {background-color: yellow;
+	color: red;}
