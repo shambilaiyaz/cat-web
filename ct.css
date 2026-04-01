@@ -1,84 +1,107 @@
-h1 {color:rgb(255, 0, 0);}
-
-h2 {background-color:rgb(0, 0, 255);
-font-family:unset;
-font-size: 35px;
+h1 {
+    color: rgb(255, 0, 0);
 }
 
-body {background-color:rgb(255, 235, 0);}
+h2 {
+    background-color: rgb(0, 0, 255);
+    font-family: unset;
+    font-size: 35px;
+}
 
-#opti {font-family: revert;
-font-size: 40px;
+body {
+    background-color: rgb(255, 235, 0);
+}
+
+#opti {
+    font-family: revert;
+    font-size: 40px;
 }
 
 /*opti to green*/
 
-#green {color:rgb(0, 255, 0);
- background-color: rgb(255, 0, 0);
- font-family: monospace;
- font-size: 60px;}
+#green {
+    color: rgb(0, 255, 0);
+    background-color: rgb(255, 0, 0);
+    font-family: monospace;
+    font-size: 60px;
+}
 
 /*green to plant*/
 
-#plant {font-size: 45px;
-color: rgb(255, 0, 0);
-font-family: inherit;
-font-weight: bold;
+#plant {
+    font-size: 45px;
+    color: rgb(255, 0, 0);
+    font-family: inherit;
+    font-weight: bold;
 }
 
 /*plant to wild*/
 
-#wild 
-{background-color: rgb(0, 255, 0);
-color: rgb(0, 0, 255);
-font-family: cursive;
+#wild {
+    background-color: rgb(0, 255, 0);
+    color: rgb(0, 0, 255);
+    font-family: cursive;
 }
 
 /*wild to nit!*/
 
-#nit {color: rgb(100, 250, 255);
-background-color: rgb(0, 0, 0);
-font-style: italic;
+#nit {
+    color: rgb(100, 250, 255);
+    background-color: rgb(0, 0, 0);
+    font-style: italic;
 }
 
 /*nit to history*/
 
-#history 
-{font-size: 45px;
-color: rgb(255, 0, 0);
-font-family: inherit;
-font-weight: bold;
-text-decoration: blink;
-}  
+#history {
+    font-size: 45px;
+    color: rgb(255, 0, 0);
+    font-family: inherit;
+    font-weight: bold;
+    text-decoration: blink;
+}
 
 /*history to cat*/
 
-#cat {margin-bottom: 42px;}
+#cat {
+    margin-bottom: 42px;
+}
 
 /*<!--//...!-->*/
 
-#blue {color: blue;
-background-color:rgb(255, 235, 0);
-font-family: inherit;
-font-style: oblique;
-font-size: 30px;
-text-decoration: underline;
-border-top: 22px;}
+#blue {
+    color: blue;
+    background-color: rgb(255, 235, 0);
+    font-family: inherit;
+    font-style: oblique;
+    font-size: 30px;
+    text-decoration: underline;
+    border-top: 22px;
+}
 
 /*blue to ton*/
 
 #ton {
-color: rgb(255, 0, 255);
-font-family: fantasy;
-font-size: 48px;
-width: 36;
+    color: rgb(255, 0, 255);
+    font-family: fantasy;
+    font-size: 48px;
+    width: 76px;
 }
 
 /*ton to reader*/
 
-#reader {font-size: 35px}
+#reader {
+    font-size: 58px;
+    font-family: monospace;
+    font-weight: bold;
+    color: blue;
+    text-decoration: underline;
+    border: solid crimson;
+}
 
 /*reader to WARNING*/
 
-.warning {background-color: yellow;
-	color: red;}
+.warning {
+    background-color: yellow;
+    color: red;
+}
