@@ -101,3 +101,11 @@ body {
     text-decoration: underline;
     border: solid crimson;
 }
+
+/*reader to WARNING*/
+
+.warning {
+    background-color: yellow;
+    color: crimson;
+    font-family: fantasy;
+}
