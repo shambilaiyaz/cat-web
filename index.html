@@ -48,15 +48,22 @@
 
                 <!-- opti !-->
 
-                <select id="opti">
-                    <option>rope</option>
-                    <option>rat</option>
-                    <option>feather</option>
-                    <option>laser</option>
+                <select id="opti" onchange="changeImage()">
+                    <option id="rope" value="rope">rope</option>
+                    <option id="rat" value="rat">rat</option>
+                    <option id="bird" value="bird">feather</option>
+                    <option id="laser" value="laser">laser</option>
                 </select>
             </h2>
+            <!--img-->
+            <img
+                src="https://imgs.search.brave.com/MFR2dtplD4WReIGtOCbt0FSAQYT9WRp_ShFvOXDgTqA/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMucGV4ZWxzLmNv/bS9waG90b3MvMTQw/NDU1NjIvcGV4ZWxz/LXBob3RvLTE0MDQ1/NTYyLmpwZWc_YXV0/bz1jb21wcmVzcyZj/cz10aW55c3JnYiZk/cHI9MSZ3PTUwMA"
+                alt="rope"
+                id="img_opti"
+                width="380"
+            />
 
-            <!-- researched line -->
+            <!--researched line -->
             <h2 id="green">cats hate green</h2>
             <br />
 
@@ -70,7 +77,8 @@
 
             <!-- link -->
             <a href="https://en.wikipedia.org/wiki/Wildlife"
-                ><span id="plant">Wildness</span></a>
+                ><span id="plant">Wildness</span></a
+            >
         </div>
         <!-- /ct -->
     </body>
