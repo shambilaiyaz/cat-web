@@ -22,3 +22,17 @@ function checkAccess() {
     checkAccess();
   }
 }
+function Login() {
+  let username = prompt("Enter your user name:");
+  let paskey = prompt(
+    "hint: what are you looking for?, in my web?, learning? (Y/N)",
+  );
+
+  if (paskey === "Yes") {
+    document.getElementById("ful-page").style.display = "block";
+    alert("Welcome, " + username + "!");
+  } else {
+    alert("Wrong username or password!");
+    Login();
+  }
+}
