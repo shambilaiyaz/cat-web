@@ -45,10 +45,30 @@ function selectOption(value) {
 }
 
 document.addEventListener("keydown", function (e) {
+  let key = e.key.toLowerCase();
+
+  // handle Enter for specific inputs first (before isTyping check)
+  if (key === "enter") {
+    let focused = document.activeElement;
+    if (focused && focused.id === "login-user") {
+      e.preventDefault();
+      submitLogin();
+      return;
+    }
+    if (focused && focused.id === "login-pass") {
+      e.preventDefault();
+      submitLogin();
+      return;
+    }
+    if (focused && focused.id === "power-input") {
+      e.preventDefault();
+      handlePowerCommand();
+      return;
+    }
+  }
+
   // don't trigger shortcuts while typing in the note input or a select
   if (isTyping()) return;
-
-  let key = e.key.toLowerCase();
 
   switch (key) {
     case "t":
