@@ -1,4 +1,4 @@
-<!doctype html>
+<! html>
 <html lang="en">
     <!-- ct -->
 
@@ -10,13 +10,14 @@
 	initial-scale=1"
         />
         <title>Cat</title>
-        <!-- connected -->
+        <!-- connection -->
         <link rel="stylesheet" href="ct.css" />
         <script src="ct.js"></script>
         <script src="act-ct.js"></script>
         <script src="bootin-ct.js"></script>
         <script src="sound-ct.js"></script>
         <script src="keymap-ct.js"></script>
+        <script src="power-ct.js"></script>
     </head>
 
     <body onload="Login()">
@@ -29,12 +30,14 @@
                     type="text"
                     id="login-user"
                     placeholder="enter your name"
+                    onkeydown="if (event.key === 'Enter') submitLogin();"
                 />
                 <label for="login-pass">why are you here?</label>
                 <input
                     type="text"
                     id="login-pass"
-                    placeholder="hint: what are you looking for learning?(Y/N)"
+                    placeholder="what are you looking for learning? (Y/N)"
+                    onkeydown="if (event.key === 'Enter') submitLogin();"
                 />
                 <button id="login-btn" onclick="submitLogin()">enter</button>
                 <p id="login-error"></p>
@@ -112,6 +115,20 @@
                 ><span id="plant">Wildness</span></a
             >
             <button onclick="showAlert2()" id="help">?</button>
+
+            <!-- power command -->
+            <div id="power-box">
+                <input
+                    type="text"
+                    id="power-input"
+                    placeholder="try: commit save | commit log | chnge code to date=N"
+                    onkeydown="if (event.key === 'Enter') handlePowerCommand();"
+                />
+                <button onclick="handlePowerCommand()" id="power-btn">
+                    run
+                </button>
+                <p id="power-output"></p>
+            </div>
         </div>
         <!-- /ct -->
     </body>
