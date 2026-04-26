@@ -1,0 +1,42 @@
+# Rails
+/log/*
+/tmp/*
+/storage/*
+.byebug_history
+
+# SQLite
+*.sqlite3
+
+# Assets
+/app/assets/builds/*
+
+# Dependencies
+/node_modules
+/vendor/bundle
+
+# Environment
+.env
+.env.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ruby LSP
+.ruby-lsp/
+
+# Danube
+.danube/
+
+# Credentials
+config/master.key
+config/credentials/*.key
+
+# Bootsnap cache
+tmp/cache/bootsnap

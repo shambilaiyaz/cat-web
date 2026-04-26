@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Cat Web Rails" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Cat Web Rails">
+    <meta name="mobile-web-app-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag "ct", media: "all" %>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("act-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("bootin-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("check_box-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("sound-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("keymap-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("turmux-ct.js") %>"></script>
+    <script nonce="<%= request.content_security_policy_nonce %>" src="<%= asset_path("email-ct.js") %>"></script>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

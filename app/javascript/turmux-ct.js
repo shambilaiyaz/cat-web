@@ -1,0 +1,316 @@
+// TURMUX-CT — Time Travel Command System
+// ===================================================================================
+// Commands:
+//   terminal / turmux / terminator → show this command man
+//   comment <text>                → leave a comment for the site
+//   comment delete <N>            → delete comment number N
+//   comment clear                 → delete all comments
+//   comments                      → show all comments
+//   chnge code to date=N           → revert page to commit var:N
+//   chnge code to var=N            → revert page to commit var:N
+//   commit sv                    → save current state as a new commit
+//   commit log                     → show all commits
+//   commit nw                     → save with auto date
+// ===================================================================================
+
+function getSnapshotKey(date) {
+  return "ct_snap_" + date;
+}
+
+function getCommitKey(varNum) {
+  return "ct_var_" + varNum;
+}
+
+function saveCommit(label) {
+  let pageHTML = document.getElementById("ful-page").innerHTML;
+  let now = new Date();
+  let dateStr = now.toISOString().split("T")[0];
+  let timeStr = now.toTimeString().split(" ")[0];
+  let commitLabel = label || "commit on " + dateStr + " " + timeStr;
+
+  let commitIndex = getNextVarNum();
+
+  let commitData = {
+    var: commitIndex,
+    date: dateStr,
+    time: timeStr,
+    label: commitLabel,
+    html: pageHTML,
+  };
+
+  localStorage.setItem(getCommitKey(commitIndex), JSON.stringify(commitData));
+  localStorage.setItem(getSnapshotKey(dateStr), JSON.stringify(commitData));
+  localStorage.setItem("ct_commit_count", commitIndex);
+
+  return commitData;
+}
+
+function getNextVarNum() {
+  let count = parseInt(localStorage.getItem("ct_commit_count") || "0", 10);
+  return count + 1;
+}
+
+function getCurrentVarNum() {
+  return parseInt(localStorage.getItem("ct_commit_count") || "0", 10);
+}
+
+function restoreCommit(commitData) {
+  if (!commitData || !commitData.html) {
+    return false;
+  }
+  document.getElementById("ful-page").innerHTML = commitData.html;
+  return true;
+}
+
+function getCommitByDate(dateStr) {
+  let data = localStorage.getItem(getSnapshotKey(dateStr));
+  if (data) return JSON.parse(data);
+
+  let count = getCurrentVarNum();
+  for (let i = count; i >= 1; i--) {
+    let commit = localStorage.getItem(getCommitKey(i));
+    if (commit) {
+      let parsed = JSON.parse(commit);
+      if (parsed.date === dateStr) return parsed;
+    }
+  }
+  return null;
+}
+
+function getCommitByVar(varNum) {
+  let data = localStorage.getItem(getCommitKey(varNum));
+  if (data) return JSON.parse(data);
+  return null;
+}
+
+function showCommitLog() {
+  let count = getCurrentVarNum();
+  if (count === 0) {
+    return "No commits yet. Use 'commit save' to mak your first commit!";
+  }
+
+  let log = "COMMIT LOG\n========================\n";
+  for (let i = 1; i <= count; i++) {
+    let commit = getCommitByVar(i);
+    if (commit) {
+      log +=
+        "var:" +
+        commit.var +
+        " | " +
+        commit.date +
+        " " +
+        commit.time +
+        " | " +
+        commit.label +
+        "\n";
+    }
+  }
+  log += "========================\nTotal: " + count + " commits";
+  return log;
+}
+
+function runCommand(input) {
+  let cmd = input.trim().toLowerCase();
+  let output = "";
+
+  let dateMatch = cmd.match(/chnge code to date=(\d+)/);
+  if (dateMatch) {
+    let varNum = parseInt(dateMatch[1], 10);
+    let commit = getCommitByVar(varNum);
+    if (commit) {
+      restoreCommit(commit);
+      output =
+        "Time-traveled to date=" +
+        varNum +
+        " (var:" +
+        commit.var +
+        ") — " +
+        commit.label;
+    } else {
+      output =
+        "No commit found at date=" +
+        varNum +
+        ". Max var is " +
+        getCurrentVarNum();
+    }
+    return output;
+  }
+
+  let varMatch = cmd.match(/chnge code to var=(\d+)/);
+  if (varMatch) {
+    let varNum = parseInt(varMatch[1], 10);
+    let commit = getCommitByVar(varNum);
+    if (commit) {
+      restoreCommit(commit);
+      output =
+        "Time-traveled to var:" +
+        varNum +
+        " (" +
+        commit.date +
+        ") — " +
+        commit.label;
+    } else {
+      output =
+        "No commit found at var:" +
+        varNum +
+        ". Max var is " +
+        getCurrentVarNum();
+    }
+    return output;
+  }
+
+  if (cmd === "commit save" || cmd === "commit now") {
+    let label = cmd === "commit now" ? "auto commit" : "manual commit";
+    let commit = saveCommit(label);
+    output = "Svd! var:" + commit.var + " | " + commit.date + " " + commit.time;
+    return output;
+  }
+
+  if (cmd === "commit log") {
+    output = showCommitLog();
+    return output;
+  }
+
+  // comment delete <N> — delete a specific comment (only your own)
+  let commentDeleteMatch = cmd.match(/^comment delete (\d+)$/);
+  if (commentDeleteMatch) {
+    let num = parseInt(commentDeleteMatch[1], 10);
+    let comments = JSON.parse(localStorage.getItem("ct_comments") || "[]");
+    let currentUser = sessionStorage.getItem("ct_username") || "anonymous";
+    if (num < 1 || num > comments.length) {
+      output =
+        "Comment #" +
+        num +
+        " not found. There are " +
+        comments.length +
+        " comments.";
+    } else {
+      let target = comments[num - 1];
+      if (target.user !== currentUser) {
+        output =
+          "you can only delete your own comments! comment #" +
+          num +
+          " belongs to " +
+          target.user;
+      } else {
+        let removed = comments.splice(num - 1, 1)[0];
+        localStorage.setItem("ct_comments", JSON.stringify(comments));
+        output = "Deleted comment #" + num + ': "' + removed.text + '"';
+      }
+    }
+    return output;
+  }
+
+  // comment clear — delete all comments (requires password)
+  if (cmd === "comment clear") {
+    let password = prompt("enter password to clear all comments:");
+    if (password !== "@sqwerty") {
+      output = "wrong password! comments not cleared.";
+      return output;
+    }
+    let comments = JSON.parse(localStorage.getItem("ct_comments") || "[]");
+    let count = comments.length;
+    localStorage.removeItem("ct_comments");
+    output = "Cleared " + count + " comment" + (count !== 1 ? "s" : "") + "!";
+    return output;
+  }
+
+  // comment <text> — save a user comment
+  let commentMatch = cmd.match(/^comment\s+(.+)/);
+  if (commentMatch) {
+    let text = input.trim().replace(/^comment\s+/i, "");
+    let username = sessionStorage.getItem("ct_username") || "anonymous";
+    let now = new Date();
+    let dateStr = now.toISOString().split("T")[0];
+    let timeStr = now.toTimeString().split(" ")[0];
+
+    let comments = JSON.parse(localStorage.getItem("ct_comments") || "[]");
+    comments.push({
+      user: username,
+      text: text,
+      date: dateStr,
+      time: timeStr,
+    });
+    localStorage.setItem("ct_comments", JSON.stringify(comments));
+
+    output = "Comment svd! 🐾 thanks " + username + "!";
+    return output;
+  }
+
+  // comments — show all comments
+  if (cmd === "comments") {
+    let comments = JSON.parse(localStorage.getItem("ct_comments") || "[]");
+    if (comments.length === 0) {
+      output = "No comments yet. Be the first! Use: comment <text>";
+    } else {
+      output = "COMMENTS\n========================\n";
+      for (let i = 0; i < comments.length; i++) {
+        output +=
+          i +
+          1 +
+          ". " +
+          comments[i].user +
+          " (" +
+          comments[i].date +
+          " " +
+          comments[i].time +
+          ")\n" +
+          '   "' +
+          comments[i].text +
+          '"\n\n';
+      }
+      output +=
+        "========================\nTotal: " + comments.length + " comments";
+    }
+    return output;
+  }
+
+  // terminal / turmux / terminator — show command man
+  if (cmd === "man") {
+    output =
+      "Man — Command Man\n" +
+      "========================\n" +
+      "terminal / turmux / terminator\n" +
+      "  → show this command man\n\n" +
+      "chnge code to date=N\n" +
+      "  → revert page to commit var:N\n\n" +
+      "chnge code to var=N\n" +
+      "  → revert page to commit var:N\n\n" +
+      "comment <text>\n" +
+      "  → leave a comment for the site\n\n" +
+      "comment delete <N>\n" +
+      "  → delete comment number N\n\n" +
+      "comment clear\n" +
+      "  → delete all comments\n\n" +
+      "comments\n" +
+      "  → show all comments\n\n" +
+      "commit sv / commit save\n" +
+      "  → save current state as a new commit\n\n" +
+      "commit now / commit nw\n" +
+      "  → save with auto date\n\n" +
+      "commit log\n" +
+      "  → show all commits\n" +
+      "========================";
+    return output;
+  }
+
+  output =
+    "Unknown command. Try:\n- terminal / turmux / terminator (show man)\n- comment <text> (leave a comment)\n- comment delete <N> (delete a comment)\n- comment clear (delete all comments)\n- comments (show all comments)\n- chnge code to date=N\n- chnge code to var=N\n- commit save\n- commit now\n- commit log";
+  return output;
+}
+
+function handlePowerCommand() {
+  let input = document.getElementById("power-input").value;
+  if (!input.trim()) return;
+
+  let result = runCommand(input);
+  document.getElementById("power-output").textContent = result;
+  document.getElementById("power-input").value = "";
+}
+
+function initPower() {
+  let count = getCurrentVarNum();
+  if (count === 0) {
+    saveCommit("initial state");
+  }
+}
