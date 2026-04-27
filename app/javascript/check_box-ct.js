@@ -67,8 +67,8 @@ function submitLogin() {
     sessionStorage.setItem("ct_username", username);
     sessionStorage.setItem("ct_email", email);
     handleRemember(username, email);
-    // Save email to database via AJAX
-    saveEmailToDb(email, username);
+    // Save email to database via AJAX (see data-ct.js)
+    saveEmailFromLogin(email, username);
     window.location.href = "/index";
   } else {
     errorEl.textContent =
@@ -76,25 +76,7 @@ function submitLogin() {
   }
 }
 
-// Save email to SQLite via the user_emails endpoint
-function saveEmailToDb(email, username) {
-  var csrfToken = document.querySelector('meta[name="csrf-token"]');
-  var headers = {
-    "X-Requested-With": "XMLHttpRequest",
-    Accept: "application/json",
-  };
-  if (csrfToken) {
-    headers["X-CSRF-Token"] = csrfToken.getAttribute("content");
-  }
-  fetch("/user_emails", {
-    method: "POST",
-    headers: headers,
-    credentials: "same-origin",
-    body: JSON.stringify({ user_email: { email: email, username: username } }),
-  }).catch(function () {
-    // silently fail — email save is non-critical
-  });
-}
+// saveEmailToDb moved to data-ct.js — now called saveEmailFromLogin()
 
 // Bind checkbox listeners and fill remembered username after DOM is ready
 document.addEventListener("DOMContentLoaded", function () {

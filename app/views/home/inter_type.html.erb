@@ -1,0 +1,80 @@
+<!-- ct — interType view -->
+<div id="interType-page">
+  <main class="interType-container">
+
+    <!-- Header -->
+    <header class="interType-header">
+      <a href="/index" class="interType-back" aria-label="Back to index">&#8592; back</a>
+      <h1 class="interType-title">63 interType</h1>
+      <span class="interType-paws" aria-hidden="true">&#128568; &#129432;</span>
+    </header>
+
+    <!-- Chat Panel -->
+    <section class="interType-chat-panel" aria-label="Chat interface">
+
+      <!-- Messages Area -->
+      <div id="interType-chat" class="interType-messages">
+        <div class="interType-msg interType-bot">
+          <p>Meow! 😺 I'm 63 interType, your ct-web AI assistant. Ask me anything about the project!</p>
+        </div>
+      </div>
+
+      <!-- Input Form -->
+      <form id="interType-form" class="interType-input-form" action="javascript:void(0)">
+        <label for="interType-input" class="sr-only">Type a message</label>
+        <input
+          type="text"
+          id="interType-input"
+          class="interType-input"
+          placeholder="ask the cat AI something..."
+          autocomplete="off"
+        >
+        <button type="submit" id="interType-send" class="interType-send-btn" aria-label="Send message">&#10148;</button>
+      </form>
+
+    </section>
+
+  </main>
+</div>
+
+<script nonce="<%= request.content_security_policy_nonce %>">
+    // 63 interType — chat (inline for reliability)
+    (function() {
+        var chatBox = document.getElementById("interType-chat");
+        var form = document.getElementById("interType-form");
+        var input = document.getElementById("interType-input");
+
+        if (!form || !input || !chatBox) return;
+
+        form.addEventListener("submit", function(e) {
+            e.preventDefault();
+            var text = input.value.trim();
+            if (!text) return;
+
+            // Add user message
+            var userDiv = document.createElement("div");
+            userDiv.className = "interType-msg interType-user";
+            var userP = document.createElement("p");
+            userP.textContent = text;
+            userDiv.appendChild(userP);
+            chatBox.appendChild(userDiv);
+
+            // Get bot response
+            var response = interTypeRespond(text);
+
+            // Add bot message
+            var botDiv = document.createElement("div");
+            botDiv.className = "interType-msg interType-bot";
+            var botP = document.createElement("p");
+            botP.textContent = response;
+            botDiv.appendChild(botP);
+            chatBox.appendChild(botDiv);
+
+            // Clear and scroll
+            input.value = "";
+            input.focus();
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    })();
+</script>
+<!-- /ct interType -->

@@ -103,6 +103,9 @@
       </div>
     </footer>
 
+    <!-- interType link -->
+    <button id="inter_type-btn" onclick="window.location.href='/interType'">63 interType 🤖</button>
+
     <!-- Logout -->
     <footer class="card-footer-logout">
       <a href="/" id="logout-link">logout</a>
@@ -111,23 +114,4 @@
   </main>
 </div>
 
-<script nonce="<%= request.content_security_policy_nonce %>">
-    // Greet the user by name from sessionStorage (set during login)
-    (function() {
-        let username = sessionStorage.getItem("ct_username");
-        let welcom = document.getElementById("welcom");
-        if (username && welcom) {
-            welcom.textContent = "learn about cat! " + username + "!";
-        } else {
-            // Not logged in — redirect back to login
-            // window.location.href = "/login";
-        }
-
-        // Fill hidden email-username field so it gets submitted with the form
-
-
-        // Initialize the power commit system
-        initPower();
-    })();
-</script>
 <!-- /ct -->

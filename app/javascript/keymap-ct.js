@@ -70,6 +70,13 @@ document.addEventListener("keydown", function (e) {
       handlePowerCommand();
       return;
     }
+    if (focused && focused.id === "interType-input") {
+      e.preventDefault();
+      document
+        .getElementById("interType-form")
+        .dispatchEvent(new Event("submit", { cancelable: true }));
+      return;
+    }
   }
 
   // don't trigger shortcuts while typing in the note input or a select

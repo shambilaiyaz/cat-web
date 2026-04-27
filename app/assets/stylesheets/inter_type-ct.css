@@ -1,0 +1,278 @@
+/* interType-CT — 63 interType page styles
+// ===================================================================================
+// All styles for the interType AI assistant page.
+// Extracted from inter_type.html.erb inline styles for modular organization.
+// =================================================================================== */
+
+/* interType page */
+
+#interType-page {
+    min-height: 100vh;
+    background: radial-gradient(ellipse at top, #fff5e6 0%, #ffe0b2 40%, #ffb3b3 100%);
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.interType-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 16px;
+    box-sizing: border-box;
+}
+
+/* header */
+
+.interType-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 0 10px;
+    border-bottom: 3px solid #ff8c42;
+    flex-shrink: 0;
+}
+
+.interType-back {
+    font-size: 18px;
+    font-weight: bold;
+    color: #ff3c7f;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.7);
+    transition: transform 0.2s ease, background 0.2s ease;
+    white-space: nowrap;
+}
+
+.interType-back:hover {
+    transform: scale(1.06);
+    background: rgba(255, 140, 66, 0.3);
+}
+
+.interType-title {
+    font-size: 32px;
+    font-weight: bold;
+    background: linear-gradient(135deg, #ff6b35, #ff3c7f, #ff1493);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin: 0;
+    flex: 1;
+    animation: titleGradient 4s ease-in-out infinite;
+}
+
+@keyframes titleGradient {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
+.interType-paws {
+    font-size: 28px;
+    animation: wiggle 1.5s ease-in-out infinite;
+}
+
+@keyframes wiggle {
+    0%, 100% { transform: rotate(0deg); }
+    25% { transform: rotate(-8deg); }
+    75% { transform: rotate(8deg); }
+}
+
+/* chat panel */
+
+.interType-chat-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    margin-top: 12px;
+    margin-bottom: 16px;
+    border: 3px solid #ff8c42;
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 24px rgba(255, 140, 66, 0.3);
+}
+
+/* messages area */
+
+.interType-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* individual messages */
+
+.interType-msg {
+    max-width: 80%;
+    padding: 10px 14px;
+    border-radius: 14px;
+    font-size: 16px;
+    line-height: 1.45;
+    word-wrap: break-word;
+    animation: msgFadeIn 0.35s ease-out;
+}
+
+@keyframes msgFadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.interType-msg p {
+    margin: 0;
+}
+
+.interType-msg.interType-bot {
+    align-self: flex-start;
+    background: linear-gradient(135deg, #fff5e6, #ffe0b2);
+    color: #5a2d0c;
+    border: 2px solid #ffb3b3;
+    border-bottom-left-radius: 4px;
+}
+
+.interType-msg.interType-user {
+    align-self: flex-end;
+    background: linear-gradient(135deg, #ff6b6b, #ff3c7f);
+    color: white;
+    border: 2px solid #ff1493;
+    border-bottom-right-radius: 4px;
+}
+
+/* message label */
+
+.interType-label {
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    margin-bottom: 4px;
+    opacity: 0.7;
+}
+
+.interType-content {
+    font-size: 15px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+}
+
+/* input form */
+
+.interType-input-form {
+    display: flex;
+    gap: 8px;
+    padding: 12px 14px;
+    border-top: 2px solid #ffb3b3;
+    background: linear-gradient(135deg, #fff5e6, #ffe0b2);
+    border-radius: 0 0 14px 14px;
+    flex-shrink: 0;
+}
+
+.interType-input {
+    flex: 1;
+    padding: 12px 14px;
+    font-size: 16px;
+    border: 2.5px solid #ff8c42;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    outline: none;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.interType-input:focus {
+    transform: scale(1.02);
+    box-shadow: 0 0 14px rgba(255, 140, 66, 0.5), 0 0 28px rgba(255, 60, 127, 0.2);
+    border-color: #ff3c7f;
+}
+
+.interType-input::placeholder {
+    color: #cc9966;
+    font-style: italic;
+}
+
+.interType-send-btn {
+    padding: 12px 18px;
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background: linear-gradient(135deg, #ff6b6b, #ff3c7f, #ff1493);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 60, 127, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: titleGradient 4s ease-in-out infinite;
+}
+
+.interType-send-btn:hover {
+    transform: scale(1.07);
+    box-shadow: 0 6px 24px rgba(255, 60, 127, 0.6), 0 0 40px rgba(255, 107, 107, 0.3);
+}
+
+.interType-send-btn:active {
+    transform: scale(0.96);
+    box-shadow: 0 2px 8px rgba(255, 60, 127, 0.4);
+}
+
+/* mobile responsive */
+
+@media (max-width: 600px) {
+    .interType-container {
+        padding: 0 8px;
+    }
+
+    .interType-title {
+        font-size: 24px;
+    }
+
+    .interType-msg {
+        max-width: 90%;
+        font-size: 15px;
+    }
+
+    .interType-input {
+        font-size: 15px;
+        padding: 10px 12px;
+    }
+
+    .interType-send-btn {
+        padding: 10px 14px;
+        font-size: 18px;
+    }
+}
+
+/* scrollbar styling for chat */
+
+.interType-messages::-webkit-scrollbar {
+    width: 8px;
+}
+
+.interType-messages::-webkit-scrollbar-track {
+    background: rgba(255, 224, 178, 0.4);
+    border-radius: 4px;
+}
+
+.interType-messages::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #ff8c42, #ff3c7f);
+    border-radius: 4px;
+}
+
+/* interType knows list */
+
+.interType-knows {
+    padding-left: 20px;
+    margin: 8px 0 0;
+    font-size: 14px;
+    line-height: 1.6;
+    color: #5a2d0c;
+}
+
+.interType-knows li {
+    margin-bottom: 2px;
+}
